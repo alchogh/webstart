@@ -1,7 +1,13 @@
-function route(pathname, handle){
-  console.log('pathname : ' + pathname);
+function route(pathname, handle, response, productId) {
+  console.log("pathname : " + pathname);
 
-  handle[pathname]();
+  if (typeof handle[pathname] == "function") {
+    handle[pathname](response, productId);
+  } else {
+    response.writeHead(404, { "Content-Type": "text/html" });
+    response.write("not found");
+    response.end();
+  }
 }
 
-exports.route = route
+exports.route = route;
